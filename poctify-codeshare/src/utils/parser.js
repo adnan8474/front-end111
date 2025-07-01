@@ -6,6 +6,13 @@ import customParse from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParse);
 
+function parseExcelDate(value) {
+  const parsed = XLSX.SSF.parse_date_code(value);
+  if (!parsed) return null;
+  const { y, m, d, H, M, s } = parsed;
+  return dayjs(new Date(y, m - 1, d, H, M, s));
+}
+
 export async function parseFile(file) {
   const data = await file.arrayBuffer();
   const workbook = XLSX.read(data, { type: 'array' });
@@ -36,10 +43,13 @@ export async function parseFile(file) {
       }
     }
 
-    const parsed = dayjs(timestampRaw, 'DD/MM/YYYY HH:mm');
+    let parsed = dayjs(timestampRaw, 'DD/MM/YYYY HH:mm', true);
+    if (!parsed.isValid() && typeof timestampRaw === 'number') {
+      parsed = parseExcelDate(timestampRaw);
+    }
     console.log('Parsed row:', row);
-    console.log('Parsed timestamp:', parsed.format());
-    if (!parsed.isValid()) {
+    console.log('Parsed timestamp:', parsed ? parsed.format() : 'invalid');
+    if (!parsed || !parsed.isValid()) {
       throw new Error(`Invalid timestamp: ${timestampRaw}`);
     }
 

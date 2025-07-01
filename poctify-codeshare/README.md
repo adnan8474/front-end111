@@ -12,6 +12,8 @@ npm run dev
 
 Visit `http://localhost:5173` to view the app. Upload a CSV or XLSX file
 matching the template in `public/template.csv`.
+Numeric Excel date values are also supported and will be converted
+automatically during parsing.
 
 ## Build & Deploy
 
