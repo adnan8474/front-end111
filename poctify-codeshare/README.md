@@ -19,4 +19,3 @@ matching the template in `public/template.csv`.
 npm run build
 ```
 
-Deploy the contents of `dist/` to Netlify or any static host.
