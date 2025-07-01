@@ -18,11 +18,3 @@ matching the template in `public/template.csv`.
 ```bash
 npm run build
 ```
-
-Deploy the contents of `dist/` to Netlify or any static host.
-
-To ensure routing works on Netlify, include the `_redirects` file in the `public/` directory with the following content:
-```
-/*    /index.html   200
-```
-This allows React Router to handle client-side routes after deployment.
