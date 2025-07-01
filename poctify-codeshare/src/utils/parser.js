@@ -56,5 +56,5 @@ export async function parseFile(file) {
     return rowData;
   });
 
-  return cleaned;
+  return normalizedRows;
 }
