@@ -25,11 +25,35 @@ export async function parseFile(file) {
     return obj;
   });
 
+ j0t95t-codex/set-up-frontend-project-with-vite,-react,-and-tailwind-css
+  const cleaned = normalizedRows.map((row, idx) => {
+    const timestampRaw = row.timestamp;
+    const requiredFields = ['operator_id', 'timestamp', 'location', 'device'];
+
+    for (const field of requiredFields) {
+      const value = row[field] || row[field.replace('_', '')];
+      if (value === undefined || value === '') {
+        throw new Error(`Row ${idx + 2} missing ${field}`);
+      }
+    }
+
+    const parsed = dayjs(timestampRaw, 'DD/MM/YYYY HH:mm');
+    console.log('Parsed row:', row);
+    console.log('Parsed timestamp:', parsed.format());
+    if (!parsed.isValid()) {
+      throw new Error(`Invalid timestamp: ${timestampRaw}`);
+    }
+
+    return {
+      operator_id: String(row.operator_id || row.operatorid).trim(),
+      timestamp: parsed.toDate(),
+
   const cleaned = normalizedRows.map(row => {
     const timestampRaw = row.timestamp;
     return {
       operator_id: String(row.operator_id || row.operatorid).trim(),
       timestamp: dayjs(timestampRaw, 'DD/MM/YYYY HH:mm').toDate(),
+ main
       location: String(row.location).trim(),
       device: String(row.device).trim(),
       timestampRaw,
