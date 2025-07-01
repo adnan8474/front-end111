@@ -25,6 +25,7 @@ export async function parseFile(file) {
     return obj;
   });
 
+ j0t95t-codex/set-up-frontend-project-with-vite,-react,-and-tailwind-css
   const cleaned = normalizedRows.map((row, idx) => {
     const timestampRaw = row.timestamp;
     const requiredFields = ['operator_id', 'timestamp', 'location', 'device'];
@@ -46,6 +47,13 @@ export async function parseFile(file) {
     return {
       operator_id: String(row.operator_id || row.operatorid).trim(),
       timestamp: parsed.toDate(),
+
+  const cleaned = normalizedRows.map(row => {
+    const timestampRaw = row.timestamp;
+    return {
+      operator_id: String(row.operator_id || row.operatorid).trim(),
+      timestamp: dayjs(timestampRaw, 'DD/MM/YYYY HH:mm').toDate(),
+ main
       location: String(row.location).trim(),
       device: String(row.device).trim(),
       timestampRaw,

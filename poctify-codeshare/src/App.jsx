@@ -4,7 +4,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
+ j0t95t-codex/set-up-frontend-project-with-vite,-react,-and-tailwind-css
 import Contact from './pages/Contact';
+ main
 
 export default function App() {
   return (
@@ -15,7 +17,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
+j0t95t-codex/set-up-frontend-project-with-vite,-react,-and-tailwind-css
             <Route path="/contact" element={<Contact />} />
+
           </Routes>
         </div>
         <Footer />

@@ -17,29 +17,4 @@ matching the template in `public/template.csv`.
 
 ```bash
 npm run build
-```
 
-Deploy the contents of `dist/` to Netlify or any static host.
-When connecting the repository to Netlify, create a `netlify.toml` file specifying the build command and publish directory:
-
-```toml
-[build]
-  command = "npm run build"
-  publish = "dist"
-```
-
-
-To ensure routing works on Netlify, include the `_redirects` file in the `public/` directory with the following content:
-```
-/*    /index.html   200
-```
-This allows React Router to handle client-side routes after deployment.
-
-## Usage Instructions
-
-1. Launch the app and navigate to the **Dashboard**.
-2. Click **Browse** to select your log file (CSV or XLSX) or drag it onto the upload field.
-3. Ensure your file matches the column order in `public/template.csv`.
-4. After upload the dashboard will display summary statistics, charts and a full table of records.
-5. Use the **Export CSV** button in the Suspicious Operators table to download results.
-6. Generate a PDF report using the export controls when reviewing the dashboard.

@@ -17,7 +17,11 @@ export default function Navbar() {
         <li><Link to="/" className="hover:underline">Home</Link></li>
         <li><Link to="/dashboard" className="hover:underline">Dashboard</Link></li>
         <li><a href="#" className="hover:underline">About</a></li>
+ j0t95t-codex/set-up-frontend-project-with-vite,-react,-and-tailwind-css
         <li><Link to="/contact" className="hover:underline">Contact</Link></li>
+
+        <li><a href="#" className="hover:underline">Contact</a></li>
+ main
       </ul>
     </nav>
   );
