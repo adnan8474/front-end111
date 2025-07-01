@@ -1,6 +1,4 @@
-
 import { matchHeaders } from './headerMatcher';
-import { validateHeaders } from './validators';
 import * as XLSX from 'xlsx';
 import dayjs from 'dayjs';
 import customParse from 'dayjs/plugin/customParseFormat';
@@ -21,45 +19,41 @@ export async function parseFile(file) {
   const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
   if (!rows.length) throw new Error('Empty file');
+
   const [headerRow, ...dataRows] = rows;
-  const headerMap = matchHeaders(headerRow);
-  validateHeaders(Object.keys(headerMap));
 
-  const normalizedRows = dataRows.map(r => {
-    const obj = {};
-    Object.entries(headerMap).forEach(([key, label]) => {
-      const idx = headerRow.indexOf(label);
-      obj[key] = r[idx];
+  const requiredHeaders = ['operator_id', 'timestamp', 'location', 'device'];
+  const cleanedHeaders = headerRow.map(h => h?.toString().trim().toLowerCase());
+
+  const missing = requiredHeaders.filter(col => !cleanedHeaders.includes(col));
+  if (missing.length) {
+    throw new Error(`Missing column(s): ${missing.join(', ')}`);
+  }
+
+  const normalizedRows = dataRows.map(row => {
+    const rowData = {};
+    headerRow.forEach((label, idx) => {
+      const key = label?.toString().trim().toLowerCase();
+      if (requiredHeaders.includes(key)) {
+        rowData[key] = row[idx];
+      }
     });
-    return obj;
-  });
 
-  const cleaned = normalizedRows.map(row => {
-    const raw = row.timestamp;
+    const raw = rowData.timestamp;
     let parsedDate;
 
     if (typeof raw === 'number') {
       parsedDate = excelDateToJSDate(raw);
     } else if (typeof raw === 'string') {
       parsedDate = dayjs(raw, 'DD/MM/YYYY HH:mm', true).toDate();
-    } else {
+    }
+
+    if (!parsedDate || isNaN(parsedDate)) {
       throw new Error(`Invalid timestamp: ${raw}`);
     }
 
-    return {
-      operator_id: String(row.operator_id || row.operatorid).trim(),
-      timestamp: parsedDate,
-      location: String(row.location).trim(),
-      device: String(row.device).trim(),
-      timestampRaw: raw,
-    };
-  });
-
-  cleaned.sort((a, b) => {
-    if (a.operator_id === b.operator_id) {
-      return a.timestamp - b.timestamp;
-    }
-    return a.operator_id.localeCompare(b.operator_id);
+    rowData.timestamp = parsedDate;
+    return rowData;
   });
 
   return cleaned;
