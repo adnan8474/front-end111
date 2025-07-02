@@ -18,3 +18,6 @@ matching the template in `public/template.csv`.
 ```bash
 npm run build
 
+```
+
+The landing page for POCTIFY Interactive Tools lives at the root route (`/`). To display the logo, place `poctify-logo.png` inside the `public` folder before deploying to Netlify.
