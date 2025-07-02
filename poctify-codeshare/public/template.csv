@@ -1,0 +1,5 @@
+operator_id,timestamp,location,device
+abc123,01/07/2025 08:35,ED Bay 1,Glucometer 7
+abc123,01/07/2025 08:45,ED Bay 1,Glucometer 7
+abc123,01/07/2025 08:55,ED Bay 2,Glucometer 1
+xyz789,01/07/2025 09:00,ED Bay 2,Glucometer 1
